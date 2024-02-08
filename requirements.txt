@@ -1,0 +1,10 @@
+# cat requirements.txt
+h5netcdf>=1.0.2
+matplotlib>=3.5.2
+netcdf4>=1.6.1
+numpy>=1.20.3
+pandas>=1.3.4
+pyrfu>=2.3.22
+scipy>=1.6.2
+setuptools>=56.0.0
+xarray>=0.17.0
