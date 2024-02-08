@@ -38,8 +38,7 @@ To compile the dataset used in the paper run
 python3.10 compile.py -s 0 -a 3
 ```
 
-Figures in the paper can be reproduced using `plot_distribution.py`, `plot_flapping.
-py`, and `plot_tau.py`.
+Figures in the paper can be reproduced using [`plot_distribution.py`](plot_distribution.py), [`plot_flapping.py`](plot_flapping.py), and [`plot_tau.py`](./plot_tau.py).
 
 
 To reproduce Figure 1 run `plot_distribution.py`
@@ -59,6 +58,8 @@ To reproduce Figure 3 run `plot_tau.py`
 ```bash
 python3.10 plot_tau.py -a 3
 ```
+
+To reproduce the supplemental material see [`supplemental_material.ipynb`](./supplemental_material.ipynb)
 
 ## Citation
 
