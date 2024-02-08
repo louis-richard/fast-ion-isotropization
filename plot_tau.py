@@ -73,9 +73,6 @@ def main(args):
     w_ci0 = coeff * 0.5 * b_lobe
     f_ci0 = w_ci0 / (2.0 * np.pi)
 
-    w_cin = coeff * brazil.b_gsm[:, 2]
-    f_cin = w_cin / (2.0 * np.pi)
-
     w_ci = coeff * b_mag
     f_ci = w_ci / (2.0 * np.pi)
     t_ci = 1.0 / f_ci0
@@ -113,8 +110,8 @@ def main(args):
 
     # Simplified formulation for cross-check
     # dt_b = 2 * np.sqrt(7.5 / (1 + beta_tota))
-    h_db_b_m, h_db_b_s = conditional_avg(db_b, t_aniso, beta_para, n)
-    h_dt_c_m, h_dt_c_s = conditional_avg(dt_c, t_aniso, beta_para, n)
+    h_db_b_m, _ = conditional_avg(db_b, t_aniso, beta_para, n)
+    h_dt_c_m, _ = conditional_avg(dt_c, t_aniso, beta_para, n)
 
     # Compute the joint PDF of convection time and wave-particle (pitch-angle
     # scattering) interaction time.
@@ -270,7 +267,12 @@ def main(args):
     caxs11.tick_params(which="major", length=3)
     caxs11.tick_params(which="minor", length=2)
 
-    bbox = dict(boxstyle="square", ec=(1.0, 1.0, 1.0), fc=(1.0, 1.0, 1.0), alpha=0.2)
+    bbox = {
+        "boxstyle": "square",
+        "ec": (1.0, 1.0, 1.0),
+        "fc": (1.0, 1.0, 1.0),
+        "alpha": 0.2,
+    }
     make_labels(axs[0, :], (0.035, 0.88), pad=0, zorder=2, bbox=bbox)
     make_labels(axs[1, :], (0.035, 0.88), pad=2, zorder=2, bbox=bbox)
     f.savefig(

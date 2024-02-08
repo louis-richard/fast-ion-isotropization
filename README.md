@@ -11,15 +11,15 @@ We present a statistical analysis of ion distributions in magnetic reconnection 
 - A [`requirements.txt`](./requirements.txt) file is available at the root of this repository, specifying the
  required packages for our analysis.
 
-- Routines specific to this study [`ionaniso`](./IonAniso) is 
-  pip-installable: from the [`IonAniso`](./IonAniso) folder run `pip 
+- Routines specific to this study [`ionaniso`](./IonAniso) is
+  pip-installable: from the [`IonAniso`](./IonAniso) folder run `pip
   install .`
 
 ## Reproducing our results
 Ion temperature anisotropies and non-Maxwellianities are calculted using `compile.py`
 
 ```console
-foo@bar:~$ python3.10 compile.py -h  
+foo@bar:~$ python3.10 compile.py -h
 Load IGRF coefficients ...
 usage: Calculate the temperature anisotropy, non-Maxwellianity, etc. in the dataset of reconnection jets. [-h] [--start START] [-a AVERAGE]
 

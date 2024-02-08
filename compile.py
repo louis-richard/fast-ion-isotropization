@@ -9,8 +9,7 @@ import os
 import numpy as np
 import pandas as pd
 import xarray as xr
-from ionaniso.load import (load_efield_mmsx, load_fpi_dis_mmsx,
-                           load_rsc_bfield_mmsx)
+from ionaniso.load import load_efield_mmsx, load_fpi_dis_mmsx, load_rsc_bfield_mmsx
 from ionaniso.utils import average_mom, average_vdf
 from pyrfu import mms, pyrf
 from scipy import constants
@@ -157,11 +156,11 @@ def main(args):
         }
 
         if i > 0:
-            for k in out_dict.keys():
+            for k in out_dict:
                 out_dict[k] = pyrf.ts_append(brazil[k], out_dict[k])
 
         _, idxs = np.unique(out_dict["n_i"].time.data, return_index=True)
-        for k in out_dict.keys():
+        for k in out_dict:
             out_dict[k] = out_dict[k][idxs]
 
         brazil = xr.Dataset(out_dict)

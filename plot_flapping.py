@@ -70,7 +70,7 @@ def main(args):
     _, b_dmpa, b_gsm = load_rsc_bfield_mmsx(tint)
 
     # Load electric field averaged across the spacecraft
-    e_gsm, sc_pot = load_efield_mmsx(tint)
+    _, sc_pot = load_efield_mmsx(tint)
 
     # Load ion moments and distributions averaged across the spacecraft
     n_i, v_dbcs_i, v_gse_i, t_dbcs_i, t_gse_i, vdf_i_new = load_fpi_dis_mmsx(tint)
@@ -115,7 +115,7 @@ def main(args):
     model_vdf_i = mms.make_model_vdf(vdf_i_new, b_dmpa, sc_pot, n_i, v_dbcs_i, t_dbcs_i)
     model_vdf_i.data.data *= 1e-30
 
-    _, v_gse_i_avg, t_gse_i_avg = average_mom(n_i, v_gse_i, t_gse_i, n_avg)
+    _, _, t_gse_i_avg = average_mom(n_i, v_gse_i, t_gse_i, n_avg)
     n_i_avg, v_dbcs_i_avg, t_dbcs_i_avg = average_mom(n_i, v_dbcs_i, t_dbcs_i, n_avg)
     vdf_i_avg = average_vdf(vdf_i_new, n_avg)
 

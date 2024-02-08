@@ -9,18 +9,13 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
-
-
-from pyrfu import pyrf
-from pyrfu.plot import plot_spectr, make_labels, use_pyrfu_style
-from scipy import constants
+from ionaniso.plot import add_threshold, create_cmap
 
 # Local imports
-from ionaniso.utils import (
-    conditional_avg,
-    percentiles,
-)
-from ionaniso.plot import add_threshold, create_cmap
+from ionaniso.utils import conditional_avg, percentiles
+from pyrfu import pyrf
+from pyrfu.plot import make_labels, plot_spectr, use_pyrfu_style
+from scipy import constants
 
 __author__ = "Louis Richard"
 __email__ = "louisr@irfu.se"
@@ -28,6 +23,7 @@ __copyright__ = "Copyright 2023"
 __license__ = "Apache 2.0"
 
 use_pyrfu_style("aps", usetex=True)
+
 
 def main(args):
     n_avg = args.average
@@ -184,8 +180,8 @@ def main(args):
 
     make_labels(axs[0, :], (0.035, 0.92), pad=0, zorder=0)
     make_labels(axs[1, :], (0.035, 0.92), pad=2, zorder=0)
-    f.savefig(os.path.join(os.pardir, "figures", f"figure_1_bbfs_vs_qps.pdf"))
-    f.savefig(os.path.join(os.pardir, "figures", f"figure_1_bbfs_vs_qps.png"), dpi=300)
+    f.savefig(os.path.join(os.pardir, "figures", "figure_1_bbfs_vs_qps.pdf"))
+    f.savefig(os.path.join(os.pardir, "figures", "figure_1_bbfs_vs_qps.png"), dpi=300)
 
 
 if __name__ == "__main__":

@@ -3,32 +3,26 @@
 
 # Built-in imports
 import argparse
-import itertools
 import os
-import pdb
 
 # 3rd party imports
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
-
-from matplotlib import cm
-from matplotlib import colors
-from matplotlib.colors import ListedColormap
-from pyrfu import pyrf
-from pyrfu.plot import plot_spectr, make_labels
-from scipy import constants
+from ionaniso.plot import add_threshold, create_cmap
 
 # Local imports
-from ionaniso.utils import thresh, conditional_avg, histogram2d_loglog, percentiles
-from ionaniso.plot import add_threshold, create_cmap
+from ionaniso.utils import conditional_avg, histogram2d_loglog
+from pyrfu import pyrf
+from pyrfu.plot import make_labels, plot_spectr, use_pyrfu_style
+from scipy import constants
 
 __author__ = "Louis Richard"
 __email__ = "louisr@irfu.se"
 __copyright__ = "Copyright 2023"
 __license__ = "Apache 2.0"
 
-plt.style.use("./aps.mplstyle")
+use_pyrfu_style("aps", usetex=True)
 
 
 def main(args):
@@ -81,9 +75,6 @@ def main(args):
     w_ci0 = coeff * 0.5 * b_lobe
     f_ci0 = w_ci0 / (2.0 * np.pi)
 
-    w_cin = coeff * brazil.b_gsm[:, 2]
-    f_cin = w_cin / (2.0 * np.pi)
-
     w_ci = coeff * b_mag
     f_ci = w_ci / (2.0 * np.pi)
     t_ci = 1.0 / f_ci0
@@ -132,16 +123,13 @@ def main(args):
     ax.legend(loc="upper right", frameon=True)
 
     # Simplified formulation for cross-check
-    # dt_b = 2 * np.sqrt(7.5 / (1 + beta_tota))
-    h_db_b_m, h_db_b_s = conditional_avg(db_b, t_aniso, beta_para, n)
-    h_dt_c_m, h_dt_c_s = conditional_avg(dt_c, t_aniso, beta_para, n)
+    h_db_b_m, _ = conditional_avg(db_b, t_aniso, beta_para, n)
 
     # Compute the joint PDF of convection time and wave-particle (pitch-angle
     # scattering) interaction time.
     h_tau_cs = histogram2d_loglog(tau_c, tau_s, density=False, bins=[97, 48])
 
     # Compute the joint PDF of convection time and ion bouncing time.
-    h_tau_cb = histogram2d_loglog(tau_c, tau_b, density=False, bins=[98, 99])
     h_tau_cb_eff = histogram2d_loglog(tau_c, tau_b_eff, density=False, bins=[98, 99])
 
     f, ax = plt.subplots(1, figsize=(4, 3))
@@ -173,7 +161,6 @@ def main(args):
     cax.set_ylabel("counts")
     plt.show()
 
-    pdb.set_trace()
     # Compute the joint PDF of convection time and diffusion time.
     h_tau_cd = histogram2d_loglog(tau_c, tau_d, density=False, bins=[99, 99])
 
@@ -187,7 +174,6 @@ def main(args):
 
     axs[0, 0], caxs00 = plot_spectr(axs[0, 0], np.log10(h_db_b_m), cmap="Spectral_r")
     add_threshold(axs[0, 0])
-    # caxs00.set_ylabel("$\\mathrm{log}_{10}( \\delta B / B_0)$")
     caxs00.set_ylabel(
         "$\\mathrm{log}_{10}(\\langle \\delta B / B_0 | "
         "(R_i, \\beta_{i\\parallel}) \\rangle)$"

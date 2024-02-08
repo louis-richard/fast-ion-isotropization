@@ -133,9 +133,9 @@ def main(args):
     h_qps.data[n_qps.data < 25] = np.nan
 
     # Conditional average non-Maxwellianity
-    h_eps_i_m, h_eps_i_s = conditional_avg(brazil.eps_i, t_aniso, beta_para, n)
+    h_eps_i_m, _ = conditional_avg(brazil.eps_i, t_aniso, beta_para, n)
 
-    h_agy_i_m, h_agy_i_s = conditional_avg(t_agyro, t_aniso, beta_para, n)
+    h_agy_i_m, _ = conditional_avg(t_agyro, t_aniso, beta_para, n)
 
     # Distance to NS
     b_lobe = b_mag * np.sqrt(1 + beta_tota)
@@ -233,7 +233,12 @@ def main(args):
     caxs21.tick_params(which="major", length=3)
     caxs21.tick_params(which="minor", length=2)
 
-    bbox = dict(boxstyle="square", ec=(1.0, 1.0, 1.0), fc=(1.0, 1.0, 1.0), alpha=0.2)
+    bbox = {
+        "boxstyle": "square",
+        "ec": (1.0, 1.0, 1.0),
+        "fc": (1.0, 1.0, 1.0),
+        "alpha": 0.2,
+    }
     make_labels(axs[0, :], (0.035, 0.88), pad=0, zorder=2, bbox=bbox)
     make_labels(axs[1, :], (0.035, 0.88), pad=2, zorder=2, bbox=bbox)
     make_labels(axs[2, :], (0.035, 0.88), pad=4, zorder=2, bbox=bbox)

@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Built-in imports
-import time
 
-from pyrfu import mms, pyrf
 # 3rd party imports
+from pyrfu import mms, pyrf
 from scipy import constants
 
 __author__ = "Louis Richard"
@@ -90,7 +88,7 @@ def load_fpi_dis_mmsx(tint):
     """
 
     n_i_mms, v_dbcs_i_mms, t_dbcs_i_mms, v_gse_i_mms, t_gse_i_mms = [], [], [], [], []
-    vdf_i_new_mms, vdf_err_i_new_mms = [], []
+    vdf_i_new_mms = []
 
     for mms_id in range(1, 5):
         try:
@@ -169,7 +167,6 @@ def load_efield_mmsx(tint):
 
     for mms_id in range(1, 5):
         try:
-            start = time.time()
             e_gse = mms.get_data("e_gse_edp_brst_l2", tint, mms_id)
             e_gsm = pyrf.cotrans(e_gse, "gse>gsm")
             scpot = mms.get_data("v_edp_brst_l2", tint, mms_id)

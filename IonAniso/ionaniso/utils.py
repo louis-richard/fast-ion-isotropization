@@ -7,8 +7,14 @@ import itertools
 # 3rd party imports
 import numpy as np
 import xarray as xr
-from pyrfu.pyrf import (histogram2d, optimize_nbins_2d, ts_scalar, ts_skymap,
-                        ts_tensor_xyz, ts_vec_xyz)
+from pyrfu.pyrf import (
+    histogram2d,
+    optimize_nbins_2d,
+    ts_scalar,
+    ts_skymap,
+    ts_tensor_xyz,
+    ts_vec_xyz,
+)
 from scipy import constants
 
 __author__ = "Louis Richard"

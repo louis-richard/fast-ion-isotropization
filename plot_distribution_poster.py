@@ -3,34 +3,26 @@
 
 # Built-in imports
 import argparse
-import itertools
 import os
 
 # 3rd party imports
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
-
-
-from pyrfu import pyrf
-from pyrfu.plot import plot_spectr, make_labels
-from scipy import constants
+from ionaniso.plot import add_threshold, create_cmap
 
 # Local imports
-from ionaniso.utils import (
-    conditional_avg,
-    histogram2d_linlog,
-    histogram2d_loglog,
-    percentiles,
-)
-from ionaniso.plot import add_threshold, create_cmap
+from ionaniso.utils import conditional_avg, histogram2d_linlog, percentiles
+from pyrfu import pyrf
+from pyrfu.plot import make_labels, plot_spectr, use_pyrfu_style
+from scipy import constants
 
 __author__ = "Louis Richard"
 __email__ = "louisr@irfu.se"
 __copyright__ = "Copyright 2022"
 __license__ = "Apache 2.0"
 
-plt.style.use("./aps.mplstyle")
+use_pyrfu_style("aps", usetex=True)
 
 
 def main(args):
@@ -49,11 +41,8 @@ def main(args):
 
     # BBFS
     # Compute ion plasma beta (parallel, perpendicular and total)
-    # b_mag = brazil.b_mag  # old
     b_mag = pyrf.norm(brazil.b_gsm)
     p_mag = 1e-18 * b_mag**2 / (2 * constants.mu_0)  # old
-    # p_i_para = 1e6 * brazil.n_i.data * constants.electron_volt * brazil.t_para  # old
-    # p_i_perp = 1e6 * brazil.n_i.data * constants.electron_volt * brazil.t_perp  # old
     p_i_para = 1e6 * brazil.n_i.data * constants.electron_volt * brazil.t_para_i
     p_i_perp = 1e6 * brazil.n_i.data * constants.electron_volt * brazil.t_perp_i
     beta_para = p_i_para / p_mag
@@ -61,7 +50,6 @@ def main(args):
     beta_tota = (beta_para + 2 * beta_perp) / 3
 
     # Compute temperature anisotropy
-    # t_aniso = brazil.t_perp / brazil.t_para.data  # old
     t_aniso = brazil.t_perp_i / brazil.t_para_i.data
 
     # Create 2D histogram of the (\beta_{\\parallel i}, R_i) space
@@ -132,7 +120,7 @@ def main(args):
     h_qps.data[n_qps.data < 25] = np.nan
 
     # Conditional average non-Maxwellianity
-    h_eps_i_m, h_eps_i_s = conditional_avg(brazil.eps_i, t_aniso, beta_para, n)
+    h_eps_i_m, _ = conditional_avg(brazil.eps_i, t_aniso, beta_para, n)
 
     # Distance to NS
     b_lobe = b_mag * np.sqrt(1 + beta_tota)
@@ -142,10 +130,6 @@ def main(args):
 
     n_b_xy_eps_i = histogram2d_linlog(b_xy, brazil.eps_i, False, bins=[60, 62])
     p_b_xy_eps_i = percentiles(b_xy, brazil.eps_i, n_b_xy_eps_i)
-    # n_n_i_eps_i = histogram2d_loglog(brazil.n_i, brazil.eps_i, False, bins=[86, 77])
-    # p_n_i_eps_i = percentiles(brazil.n_i, brazil.eps_i, n_n_i_eps_i)
-    n_t_a_eps_i = histogram2d_loglog(t_aniso, brazil.eps_i, False, bins=[68, 75])
-    p_t_a_eps_i = percentiles(t_aniso, brazil.eps_i, n_t_a_eps_i)
 
     f, axs = plt.subplots(2, 2, figsize=(5.2, 4.1))
     f.subplots_adjust(hspace=0.3, wspace=0.78, left=0.102, right=0.88, top=0.92)
