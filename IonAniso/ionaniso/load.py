@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 # 3rd party imports
 from pyrfu import mms, pyrf
 from scipy import constants
