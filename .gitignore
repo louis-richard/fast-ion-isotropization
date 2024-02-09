@@ -1,5 +1,9 @@
 # data
-data/*
+data/mms_bbfsdb_brst_2017-2021_t-anisotropy_avg_0450.nc
+data/mms_bbfsdb_brst_2017-2021_t-anisotropy_avg_0750.nc
+data/mms_bbfsdb_brst_2017-2021_t-anisotropy_avg_1050.nc
+data/mms_bbfsdb_brst_2017-2021_t-anisotropy_avg_1350.nc
+data/mms_quietpsheet_2017-2021_t-anisotropy.nc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
